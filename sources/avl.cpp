@@ -1,8 +1,7 @@
-// C++ program to insert a node in AVL tree  
 #include <iostream>
 using namespace std; 
   
-// An AVL tree node  
+// Clase Nodo, contiene la altura de cada nodo (un mínimo de 1)
 template <class T>
 class Nodo{
 	public:
@@ -11,14 +10,14 @@ class Nodo{
         Nodo<T> *left;
         int height; 
         
-        Nodo(){
+        Nodo<T>(){
             value=NULL;
             right=NULL;
             left=NULL;
             height=1; 
         }
         
-        Nodo(T val){
+        Nodo<T>(T val){
             value=val;
             right=NULL;
             left=NULL;
@@ -28,12 +27,13 @@ class Nodo{
         ~Nodo();
 }; 
 
+//Clase AVL
 template <class T>
 class AVL{
     public:
         Nodo<T> *raiz = NULL;
-        // A utility function to get the  
-        // height of the tree  
+        
+        //Regresar la altura de cada nodo
         int height(Nodo<T> *nodo)  
         {  
             if (nodo == NULL)  
@@ -41,71 +41,73 @@ class AVL{
             return nodo->height;  
         }  
         
-        // A utility function to get maximum 
-        // of two integers  
+        /*Encontrar l altura mazima entre 2 enteros, utilizada para actualizar 
+        las alturas de los nodos correctamente y conocer su factor de balanceo */
         int max(int a, int b)  
         {  
             return (a > b)? a : b;  
         }  
         
-        // A utility function to right 
-        // rotate subtree rooted with y  
-        // See the diagram given above.  
-        Nodo<T> *rightRotate(Nodo<T> *y)  
+        //Rotaciones a la derecha
+        Nodo<T> *rotacion_simple_derecha(Nodo<T> *pivote)  
         {  
-            Nodo<T> *x = y->left;  
-            Nodo<T> *T2 = x->right;  
+            Nodo<T> *pivote_left = pivote->left;  
+            Nodo<T> *new_pivote_left = pivote_left->right;  
         
-            // Perform rotation  
-            x->right = y;  
-            y->left = T2;  
+            // Rotación 
+            pivote_left->right = pivote;  
+            pivote->left = new_pivote_left;  
         
             // Update heights  
-            y->height = max(height(y->left), height(y->right)) + 1;  
-            x->height = max(height(x->left), height(x->right)) + 1;  
+            pivote->height = max(height(pivote->left), height(pivote->right)) + 1;  
+            pivote_left->height = max(height(pivote_left->left), height(pivote_left->right)) + 1;  
         
-            // Return new root  
-            return x;  
+            // Nueva raiz (lo que se encontraba a la izquierda del pivote)   
+            return pivote_left;  
         }  
+        Nodo<T> *rotacion_doble_derecha(Nodo<T> *pivote){
+            pivote->left = rotacion_simple_izquierda(pivote->left);  
+            return rotacion_simple_derecha(pivote);  
+        }
         
-        // A utility function to left  
-        // rotate subtree rooted with x  
-        // See the diagram given above.  
-        Nodo<T> *leftRotate(Nodo<T> *x)  
+        //Rotaciones a la izquierda
+        Nodo<T> *rotacion_simple_izquierda(Nodo<T> *pivote)  
         {  
-            Nodo<T> *y = x->right;  
-            Nodo<T> *T2 = y->left;  
+            Nodo<T> *pivote_right = pivote->right;  
+            Nodo<T> *new_pivote_right = pivote_right->left;  
+
+            // Rotación
+            pivote_right->left = pivote;  
+            pivote->right = new_pivote_right;  
         
-            // Perform rotation  
-            y->left = x;  
-            x->right = T2;  
+            // Actualización de alturas
+            pivote->height = max(height(pivote->left), height(pivote->right)) + 1;  
+            pivote_right->height = max(height(pivote_right->left), height(pivote_right->right)) + 1;  
         
-            // Update heights  
-            x->height = max(height(x->left), height(x->right)) + 1;  
-            y->height = max(height(y->left), height(y->right)) + 1;  
-        
-            // Return new root  
-            return y;  
+            // Nueva raiz (lo que se encontraba a la derecha del pivote)  
+            return pivote_right;  
         }  
+        Nodo<T> *rotacion_doble_izquierda(Nodo<T> *pivote){
+            pivote->right = rotacion_simple_derecha(pivote->right);  
+            return rotacion_simple_izquierda(pivote);  
+        }
         
         // Get Balance factor of node N  
-        int getBalance(Nodo<T> *N)  
+        int obtener_factor_balanceo(Nodo<T> *N)  
         {  
             if (N == NULL)  
                 return 0;  
             return height(N->left) - height(N->right);  
         }  
         
-
-        Nodo<T>* insert(int value){
-            return insertAux(raiz, value); 
+        //Función auxiliar para no tener que esta colocando la raíz en cada llamad
+        Nodo<T>* insertar(int value){
+            raiz = insertAux(raiz, value); 
         }
-        // Recursive function to insert a value 
-        // in the subtree rooted with node and 
-        // returns the new root of the subtree.  
+        //Función de insertar implementada recursivamente
         Nodo<T>* insertAux(Nodo<T>* node, int value)  
         {  
-            /* 1. Perform the normal BST insertion */
+            //Se inserta el nodo de manera recursiva
             if (node == NULL){
                 Nodo<T>* nodo_insertado = new Nodo<T>(value);
                 return(nodo_insertado);  
@@ -114,60 +116,43 @@ class AVL{
                 node->left = insertAux(node->left, value);  
             else if (value > node->value)  
                 node->right = insertAux(node->right, value);  
-            else // Equal values are not allowed in BST  
+            else 
                 return node;  
         
-            /* 2. Update height of this ancestor node */
+            //Se actualiza la altura de cada nodo
             node->height = 1 + max(height(node->left), height(node->right));  
         
-            /* 3. Get the balance factor of this ancestor  
-                node to check whether this node became  
-                unbalanced */
-            int balance = getBalance(node);  
+            //Se obtiene el factor de balanceo de cada nodo para determinar si es necesario realizar una rotación 
+            int factor_balanceo = obtener_factor_balanceo(node);  
         
-            // If this node becomes unbalanced, then  
-            // there are 4 cases  
-        
-            // Left Left Case  
-            if (balance > 1 && value < node->left->value)  
-                return rightRotate(node);  
-        
-            // Right Right Case  
-            if (balance < -1 && value > node->right->value)  
-                return leftRotate(node);  
-        
-            // Left Right Case  
-            if (balance > 1 && value > node->left->value)  
-            {  
-                node->left = leftRotate(node->left);  
-                return rightRotate(node);  
-            }  
-        
-            // Right Left Case  
-            if (balance < -1 && value < node->right->value)  
-            {  
-                node->right = rightRotate(node->right);  
-                return leftRotate(node);  
-            }  
-        
-            /* return the (unchanged) node pointer */
+            // El arbol se encuentra cargado hacia la izquierda
+            if (factor_balanceo > 1){  
+                if (value > node->left->value)  // Caso en que se requiere una rotación doble
+                    return rotacion_doble_derecha(node); 
+                return rotacion_simple_derecha(node);  
+            }
+            // El arbol se encuentra cargado hacia la derecha
+            if (factor_balanceo < -1 && value > node->right->value){  
+                if (factor_balanceo < -1 && value < node->right->value)  // Caso en que se requiere una rotación doble
+                    return rotacion_doble_izquierda(node);  
+                return rotacion_simple_izquierda(node);  
+            }
+
+            //En caso de no requerir rotaciones
             return node;  
         }  
         
-        void preOrder(){
-            preOrderAux(raiz);
+        //Impresión 'inOrder'
+        void inOrder(){
+            inOrderAux(raiz);
         }
-        // A utility function to print preorder  
-        // traversal of the tree.  
-        // The function also prints height  
-        // of every node  
-        void preOrderAux(Nodo<T> *raiz)  
+        void inOrderAux(Nodo<T> *raiz)  
         {  
             if(raiz != NULL)  
             {  
-                cout << raiz->value << " . ";  
-                preOrderAux(raiz->left);  
-                preOrderAux(raiz->right);  
+                inOrderAux(raiz->left); 
+                cout << raiz->value << " ";   
+                inOrderAux(raiz->right);  
             }  
         }
 };  
@@ -179,16 +164,15 @@ int main()
       
     /* Constructing tree given in  
     the above figure */
-    arbol.insert(10);  
-    arbol.insert(20);  
-    arbol.insert(30);  
-    arbol.insert(40);  
-    arbol.insert(50);  
-    arbol.insert(25);  
+    arbol.insertar(10);  
+    arbol.insertar(20);  
+    arbol.insertar(30);  
+    arbol.insertar(40);  
+    arbol.insertar(50);  
+    arbol.insertar(25);  
 
-    cout << "Preorder traversal of the "
-            "constructed AVL tree is \n";  
-    arbol.preOrder();  
+    cout << "Arbol inOrden:\n";  
+    arbol.inOrder();  
       
     return 0;  
 } 
