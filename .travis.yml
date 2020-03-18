@@ -5,12 +5,12 @@ compiler:
 dist: trusty
 
 before_install:
-  - sudo add-apt-repository -qq ppa:ubuntu-toolchain-r/test 
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test 
   - sudo apt-get update -qq
 
 install:
   - sudo apt-get install -qq g++-6
-  - sudo update-alternatives --install -qq /usr/bin/g++ g++ /usr/bin/g++-6 90
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script:
   - g++ sources/functions.cpp sources/main.cpp -o a -std=c++17 -o t2
