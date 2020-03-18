@@ -5,15 +5,13 @@ compiler:
 dist: trusty
 
 before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - if [ "$CXX" == "clang++" ]; then sudo add-apt-repository -y ppa:h-rayflood/llvm; fi
+  - sudo add-apt-repository -qq ppa:ubuntu-toolchain-r/test 
   - sudo apt-get update -qq
 
 install:
   - sudo apt-get install -qq g++-6
-  - sudo apt-get install clang
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+  - sudo update-alternatives --install -qq /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script:
-  - g++ T2_AnalisisAlgoritmos/sources/functions.cpp T2_AnalisisAlgoritmos/sources/main.cpp -o a -std=c++17 -o t2
+  - g++ sources/functions.cpp sources/main.cpp -o a -std=c++17 -o t2
   - ./t2 < sources/test.txt
