@@ -93,11 +93,11 @@ class AVL{
         }
         
         // Get Balance factor of node N  
-        int obtener_factor_balanceo(Nodo<T> *N)  
+        int obtener_factor_balanceo(Nodo<T> *node)  
         {  
-            if (N == NULL)  
+            if (node == NULL)  
                 return 0;  
-            return height(N->left) - height(N->right);  
+            return height(node->right) - height(node->left);  
         }  
         
         //Función auxiliar para no tener que esta colocando la raíz en cada llamad
@@ -126,14 +126,14 @@ class AVL{
             int factor_balanceo = obtener_factor_balanceo(node);  
         
             // El arbol se encuentra cargado hacia la izquierda
-            if (factor_balanceo > 1){  
+            if (factor_balanceo < -1){  
                 if (value > node->left->value)  // Caso en que se requiere una rotación doble
                     return rotacion_doble_derecha(node); 
                 return rotacion_simple_derecha(node);  
             }
             // El arbol se encuentra cargado hacia la derecha
-            if (factor_balanceo < -1 && value > node->right->value){  
-                if (factor_balanceo < -1 && value < node->right->value)  // Caso en que se requiere una rotación doble
+            if (factor_balanceo > 1){  
+                if (value < node->right->value)  // Caso en que se requiere una rotación doble
                     return rotacion_doble_izquierda(node);  
                 return rotacion_simple_izquierda(node);  
             }
@@ -156,7 +156,7 @@ class AVL{
             }  
         }
 };  
-
+  
 int main()  
 {  
     AVL<int> arbol;  
