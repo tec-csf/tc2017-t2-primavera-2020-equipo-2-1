@@ -3,7 +3,7 @@
 ---
 
 ##### Integrantes:
-1. *[Abraham Garca Del Corral]* - *[A01023256]* - *[CSF]*
+1. *[Abraham García Del Corral]* - *[A01023256]* - *[CSF]*
 2. *[Poner aquí Nombre y Apellidos del integrante 2]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
 3. *[Poner aquí Nombre y Apellidos del integrante 3]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
 4. *[Poner aquí Nombre y Apellidos del integrante 4]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
