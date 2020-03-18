@@ -1,12 +1,8 @@
-#include <iostream> // cin y cout
-#include <cstdlib>  // rand() y srand()
-#include <fstream>  // archivos
-#include <string>   // suAVLr()
-#include <cstdio>   // printf()
-#include <ctime>    // time() [para rands] y clock()
-#include <stack>
-#include <vector>
-
+// C++ program to insert a node in AVL tree  
+#include <iostream>
+using namespace std; 
+  
+// An AVL tree node  
 template <class T>
 class Nodo{
 	public:
@@ -30,134 +26,169 @@ class Nodo{
         }
 
         ~Nodo();
-};
-
+}; 
 
 template <class T>
 class AVL{
-	public:
-        Nodo<T> *raiz;
-        
-        AVL(){
-            raiz=NULL;
-        }
-
-        ~AVL(); 
-
-        int altura(Nodo<T> *N)  
+    public:
+        Nodo<T> *raiz = NULL;
+        // A utility function to get the  
+        // height of the tree  
+        int height(Nodo<T> *nodo)  
         {  
-            if (N == NULL)  
+            if (nodo == NULL)  
                 return 0;  
-            return N->height;  
+            return nodo->height;  
         }  
-
-        int mayor(int a, int b)  
+        
+        // A utility function to get maximum 
+        // of two integers  
+        int max(int a, int b)  
         {  
             return (a > b)? a : b;  
-        } 
-
-        int factor_balanceo(Nodo<T> *N)  
+        }  
+        
+        // A utility function to right 
+        // rotate subtree rooted with y  
+        // See the diagram given above.  
+        Nodo<T> *rightRotate(Nodo<T> *y)  
+        {  
+            Nodo<T> *x = y->left;  
+            Nodo<T> *T2 = x->right;  
+        
+            // Perform rotation  
+            x->right = y;  
+            y->left = T2;  
+        
+            // Update heights  
+            y->height = max(height(y->left), height(y->right)) + 1;  
+            x->height = max(height(x->left), height(x->right)) + 1;  
+        
+            // Return new root  
+            return x;  
+        }  
+        
+        // A utility function to left  
+        // rotate subtree rooted with x  
+        // See the diagram given above.  
+        Nodo<T> *leftRotate(Nodo<T> *x)  
+        {  
+            Nodo<T> *y = x->right;  
+            Nodo<T> *T2 = y->left;  
+        
+            // Perform rotation  
+            y->left = x;  
+            x->right = T2;  
+        
+            // Update heights  
+            x->height = max(height(x->left), height(x->right)) + 1;  
+            y->height = max(height(y->left), height(y->right)) + 1;  
+        
+            // Return new root  
+            return y;  
+        }  
+        
+        // Get Balance factor of node N  
+        int getBalance(Nodo<T> *N)  
         {  
             if (N == NULL)  
                 return 0;  
-            return altura(N->right) - altura(N->left);  
+            return height(N->left) - height(N->right);  
         }  
-
-        void rotacion_simple_izquierda(Nodo<T> *pivote){
-            Node *pivote_right = pivote->right;  
-            Node *new_pivote_right = pivote_right->left;  
-        
-            // Perform rotation  
-            pivote_right->left = pivote;  
-            pivote->right = new_pivote_right;  
-        
-            // Update heights  
-            pivote->height = max(altura(pivote->left), altura(pivote->right)) + 1;  
-            pivote_right->height = max(altura(pivote_right->left), altura(pivote_right->right)) + 1;  
-        }
-
-        void insertar(T value){
-            Nodo<T> *nuevo=new Nodo<T>(value);
-            Nodo<T> *nodo_pivote; 
-
-            if(raiz==NULL){
-                raiz=nuevo;
-            }else{
-                Nodo<T> *temp=raiz;
-                while(temp!=NULL){
-                    if(factor_balanceo(temp) != 0){
-                        nodo_pivote=temp; 
-                    }
-                    if(temp->value==value){
-                        return;
-                    }
-                    else if(value<temp->value){
-                        if(temp->left==NULL){
-                            temp->left=nuevo;
-                            return;
-                        }else{
-                            temp=temp->left;
-                        }
-                    }
-                    else if(value>temp->value){
-                        if(temp->right==NULL){
-                            temp->right=nuevo;
-                            return;
-                        }else{
-                            temp=temp->right;
-                        }
-                    }
-                }
-            }
-
-
-        }
         
 
-        /*
-        void inorden(){
-                inordenAux(raiz);
-                cout<<endl;
+        Nodo<T>* insert(int value){
+            return insertAux(raiz, value); 
         }
+        // Recursive function to insert a value 
+        // in the subtree rooted with node and 
+        // returns the new root of the subtree.  
+        Nodo<T>* insertAux(Nodo<T>* node, int value)  
+        {  
+            /* 1. Perform the normal BST insertion */
+            if (node == NULL){
+                Nodo<T>* nodo_insertado = new Nodo<T>(value);
+                return(nodo_insertado);  
+            }
+            if (value < node->value)  
+                node->left = insertAux(node->left, value);  
+            else if (value > node->value)  
+                node->right = insertAux(node->right, value);  
+            else // Equal values are not allowed in BST  
+                return node;  
         
-        void inordenAux(Nodo<T> *actual){
-            if(actual==NULL){
-                return;
-            }
-            inordenAux(actual->left);
-            cout<<actual->value<<", ";
-            inordenAux(actual->right);
+            /* 2. Update height of this ancestor node */
+            node->height = 1 + max(height(node->left), height(node->right));  
+        
+            /* 3. Get the balance factor of this ancestor  
+                node to check whether this node became  
+                unbalanced */
+            int balance = getBalance(node);  
+        
+            // If this node becomes unbalanced, then  
+            // there are 4 cases  
+        
+            // Left Left Case  
+            if (balance > 1 && value < node->left->value)  
+                return rightRotate(node);  
+        
+            // Right Right Case  
+            if (balance < -1 && value > node->right->value)  
+                return leftRotate(node);  
+        
+            // Left Right Case  
+            if (balance > 1 && value > node->left->value)  
+            {  
+                node->left = leftRotate(node->left);  
+                return rightRotate(node);  
+            }  
+        
+            // Right Left Case  
+            if (balance < -1 && value < node->right->value)  
+            {  
+                node->right = rightRotate(node->right);  
+                return leftRotate(node);  
+            }  
+        
+            /* return the (unchanged) node pointer */
+            return node;  
+        }  
+        
+        void preOrder(){
+            preOrderAux(raiz);
         }
-
-        void preorden(){
-            preordenAux(raiz);
-            cout<<endl; 
+        // A utility function to print preorder  
+        // traversal of the tree.  
+        // The function also prints height  
+        // of every node  
+        void preOrderAux(Nodo<T> *raiz)  
+        {  
+            if(raiz != NULL)  
+            {  
+                cout << raiz->value << " . ";  
+                preOrderAux(raiz->left);  
+                preOrderAux(raiz->right);  
+            }  
         }
+};  
+  
+// Driver Code 
+int main()  
+{  
+    AVL<int> arbol;  
+      
+    /* Constructing tree given in  
+    the above figure */
+    arbol.insert(10);  
+    arbol.insert(20);  
+    arbol.insert(30);  
+    arbol.insert(40);  
+    arbol.insert(50);  
+    arbol.insert(25);  
 
-        void preordenAux(Nodo<T> *actual){
-            if(actual==NULL){
-                return; 
-            }
-            cout<<actual->value<<", ";
-            preordenAux(actual->left);
-            preordenAux(actual->right);
-        }
-
-        void postorden(){
-            postordenAux(raiz);
-            cout<<endl; 
-        }
-
-        void postordenAux(Nodo<T> *actual){
-            if(actual==NULL){
-                return; 
-            }
-            postordenAux(actual->left);
-            postordenAux(actual->right);
-            cout<<actual->value<<", ";
-        }*/
-};
-
-int main(){
-	AVL<int> b;
-}
+    cout << "Preorder traversal of the "
+            "constructed AVL tree is \n";  
+    arbol.preOrder();  
+      
+    return 0;  
+} 
