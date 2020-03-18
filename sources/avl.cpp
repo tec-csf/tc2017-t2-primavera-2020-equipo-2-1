@@ -156,20 +156,18 @@ class AVL{
             }  
         }
 };  
-  
-// Driver Code 
+
 int main()  
 {  
     AVL<int> arbol;  
       
-    /* Constructing tree given in  
-    the above figure */
-    arbol.insertar(10);  
-    arbol.insertar(20);  
+    //Valores de prueba
     arbol.insertar(30);  
+    arbol.insertar(20);  
+    arbol.insertar(65);  
     arbol.insertar(40);  
-    arbol.insertar(50);  
     arbol.insertar(25);  
+    arbol.insertar(67);  
 
     cout << "Arbol inOrden:\n";  
     arbol.inOrder();  
