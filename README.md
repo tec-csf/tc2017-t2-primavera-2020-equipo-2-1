@@ -5,7 +5,7 @@
 ##### Integrantes:
 1. *Abraham García Del Corral* - *A01023256* - *CSF*
 2. *Andrés Barragán Salas* - *A01026567* - *CSF*
-3. *[Poner aquí Nombre y Apellidos del integrante 3]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
+3. *Rodrigo Quiroz Reyes* - *A01026546* - *CSF*
 4. *[Poner aquí Nombre y Apellidos del integrante 4]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
 5. *[Poner aquí Nombre y Apellidos del integrante 5]* - *[Poner aquí su Matrícula]* - *[Poner aquí su campus]*
 
