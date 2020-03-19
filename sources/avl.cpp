@@ -32,7 +32,7 @@ class Nodo{
 //Clase AVL
 template <class T>
 class AVL{
-    public:
+    private: 
         Nodo<T> *raiz = NULL;
         
         //Regresar la altura de cada nodo
@@ -106,14 +106,14 @@ class AVL{
         
             return current;  
         }  
-        
+
+    public:
         //Función auxiliar para no tener que esta colocando la raíz en cada llamad
-        void insertar(int value){
+        void insertar(T value){
             raiz = insertAux(raiz, value); 
         }
         //Función de insertar implementada recursivamente
-        Nodo<T>* insertAux(Nodo<T>* node, int value)  
-        {  
+        Nodo<T>* insertAux(Nodo<T>* node, T value){  
             //Se inserta el nodo de manera recursiva
             if (node == NULL){
                 Nodo<T>* nodo_insertado = new Nodo<T>(value);
@@ -150,12 +150,11 @@ class AVL{
         }  
         
         //Función auxiliar para no tener que esta colocando la raíz en cada llamada
-        void eliminar(int value){
+        void eliminar(T value){
             raiz = eliminarAux(raiz, value); 
         }
         //Función de eliminar implementada recursivamente
-        Nodo<T>* eliminarAux(Nodo<T>* node, int value)  
-        {  
+        Nodo<T>* eliminarAux(Nodo<T>* node, T value){  
             if (node == NULL)  //El elemento a eliminar no se encuentra en el árbol 
                 return node;  
         
@@ -215,10 +214,27 @@ class AVL{
         
             return node;  
         }  
+
+        //Función auxiliar para no tener que estar llamando a la raiz siempre
+        T buscar(T value){
+            return buscarAux(raiz, value); 
+        }
+        //Se busca el valor de manera recursiva
+        T buscarAux(Nodo<T>* node, T value){
+            if (node == NULL)
+                return NULL;  
+            if (value < node->value)  
+                return buscarAux(node->left, value);  
+            else if (value > node->value)  
+                return buscarAux(node->right, value);  
+            else 
+                return node->value; 
+        }
         
         //Impresión 'inOrder'
         void inOrder(){
             inOrderAux(raiz);
+            cout<<endl; 
         }
         void inOrderAux(Nodo<T> *raiz)  
         {  
@@ -233,6 +249,7 @@ class AVL{
         //Impresión 'preOrder'
         void preOrder(){
             preOrderAux(raiz);
+            cout<<endl; 
         }
         void preOrderAux(Nodo<T> *raiz)  
         {  
@@ -262,15 +279,17 @@ int main()
 
     cout << "Arbol en orden previo a eliminación de 10:\n";  
     arbol.inOrder(); 
-    cout << "\nArbol en pre orden previo a eliminación de 10:\n";  
+    cout << "Arbol en pre orden previo a eliminación de 10:\n";  
     arbol.preOrder();   
 
     arbol.eliminar(10);
 
-    cout << "\nArbol en orden despues de eliminar 10:\n";  
+    cout << "Arbol en orden despues de eliminar 10:\n";  
     arbol.inOrder(); 
-    cout << "\nArbol en pre orden despues de eliminar 10:\n";  
+    cout << "Arbol en pre orden despues de eliminar 10:\n";  
     arbol.preOrder(); 
+
+    cout<<arbol.buscar(2)<<endl;
       
     return 0;  
 } 
