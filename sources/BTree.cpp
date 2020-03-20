@@ -28,15 +28,6 @@ class BTree{
         BTreeNode<T> root; 
         FILE *file = fopen ("nodos.bin", "w+");
 
-    public: 
-        BTree(int orden){
-            this->orden = orden; 
-            max = 2*orden-1; 
-        }
-        ~BTree(){
-            fclose(file);
-        }
-
         /* Dependiendo del orden asignado al arbol se crea un espacio vacio 
         en el archivo en la ultima posición disponible, regresando esa misma
         posición para ser utilizada como 'apuntador'*/
@@ -93,13 +84,7 @@ class BTree{
             fseek (file, (nodo+1)*sizeof(int), SEEK_SET);
             fwrite (&num, sizeof(int), 1, file);
         }
-
-        /* Función auxiliar de recorres para evitar llamara al nodo raiz */
-        void recorrer(){
-            cout<<"Impresión de los valores en orden: "<<endl;
-            recorrerAux(root.pos);
-            cout<<endl;
-        }   
+ 
         /* Se recorre el arbol en orden */ 
         void recorrerAux(int node_pos){ 
             BTreeNode<T> node; 
@@ -117,35 +102,22 @@ class BTree{
                 recorrerAux(apuntador(node.pos, i));
         } 
 
-        /* Inserción de elementos en el arbol B, depende de que el arbol tenga
-        elementos, su raiz este llena o incompleta para poder ingresar valores */
-        void insertar(int value){ 
-            if (root.pos == -1){ //Caso en el que el arbol se encuentra vacío 
-                crear_nodo(1); 
-                escribir_valor(value, 0, 0); 
-                root.read(file, 0); 
-                actualizar_numero_elementos(root.numero_elementos+1, root.pos); 
-                root.read(file, root.pos); 
-            } else { 
-                if (root.numero_elementos == max){ //la raíz esta llena
-                    //Se crea un nuevo nodo y se coloca un apuntador hacia la vieja raiz
-                    int posicion_nueva_raiz = crear_nodo(0);
-                    escribir_apuntador(root.pos, posicion_nueva_raiz, 0); 
+        /* Función para encontrar un valor dentro de la estructura del árbol */
+        T buscarAux(int node_pos, int value) 
+        { 
+            BTreeNode<T> node; 
+            node.read(file, node_pos); 
 
-                    dividir(0, posicion_nueva_raiz, root.pos); //División de la raíz previa
+            int i = 0; 
+            while (i < node.numero_elementos && value > valor(node.pos, i)) 
+                i++; 
         
-                    int i = 0; 
-                    if (valor(posicion_nueva_raiz, i) < value) 
-                        i++; 
-                    insertar_a_nodo_incompleto(apuntador(posicion_nueva_raiz, i), value);
+            if (valor(node.pos, i) == value)
+                return valor(node.pos, i); 
+            if (node.hoja == 1) 
+                return NULL; 
         
-                    root.read(file, posicion_nueva_raiz); //Se actualiza la raiz
-                } 
-                else { // La raiz no esta llena
-                    insertar_a_nodo_incompleto(root.pos, value);
-                    root.read(file, root.pos);
-                }
-            } 
+            return buscarAux(apuntador(node.pos, i), value); 
         } 
         
         /* Función para insertar en casos donde el nodo aún no se completa */
@@ -212,6 +184,283 @@ class BTree{
             actualizar_numero_elementos(original.numero_elementos+1, original.pos); 
         } 
 
+        /* Se elimina el valor establecido dentro del nodo dado */
+        void remover(int node_pos, int value){ 
+            BTreeNode<T> node; 
+            node.read(file, node_pos); 
+
+            int index = 0; 
+            while (index<node.numero_elementos && valor(node.pos, index) < value) //Se identifica la posición del valor a eliminar
+                ++index;
+        
+            if (index < node.numero_elementos && valor(node.pos, index) == value){ //El valor se encunetra en este nodo
+                if (node.hoja == 1) //Se determina si se está eliminando de una hoja o no
+                    remover_de_hoja(node.pos, index);
+                else
+                    remover_de_no_hoja(node.pos, index);
+            } else { 
+                if (node.hoja == 1) 
+                    return; //El elemento no se encuentra, no se realiza ninguna operacion
+        
+                BTreeNode<T> index_node; 
+                index_node.read(file, apuntador(node.pos, index));
+                bool flag = ((index == node.numero_elementos)? true : false); //El valor se encunetra en el último elemento de este nodo
+        
+                if (index_node.numero_elementos < orden)
+                    llenar(node.pos, index); //Se llena el nodo hijo izquierdo en caso de tener numero de elementos que el orden establecido
+        
+                node.read(file, node.pos); 
+                if (flag && index > node.numero_elementos)
+                    remover(apuntador(node.pos, index-1), value); //Al haberse llenado el nodo hijo izquierdo, se elimina el valor buscado de el
+                else
+                    remover(apuntador(node.pos, index), value);  //Se remueve el valor buscado del hijo derecho. 
+            } 
+        } 
+        
+        /* Remueve el valor buscado en un nodo que no posee hijos (o nodo hoja). */
+        void remover_de_hoja (int node_pos, int index){ 
+            BTreeNode<T> node; 
+            node.read(file, node_pos); 
+
+            for (int i=index+1; i<node.numero_elementos; ++i) //Se mueven todos los elementos un lugara hacia atrás, eliminando el valor
+                escribir_valor(valor(node.pos, i), node.pos, i-1);
+        
+            actualizar_numero_elementos(node.numero_elementos-1, node.pos); //Se reduce el número de elementos del nodo hoja
+        } 
+        
+        /* Remueve el valor buscado en un nodo que posee hijos (o nodo NO hoja). */
+        void remover_de_no_hoja(int node_pos, int index){ 
+            BTreeNode<T> node, test_node_1, test_node_2; 
+            node.read(file, node_pos); 
+
+            int value = valor(node.pos, index); //Se obtiene el valor buscado
+        
+            test_node_1.read(file, apuntador(node.pos, index)); 
+            test_node_2.read(file, apuntador(node.pos, index+1)); 
+            //Se obtiene el numero de elementos en los sucesores y predecesores para determinar que método utilizar
+            if (test_node_1.numero_elementos >= orden){
+                int predecesor = obtener_predecesor(node.pos, index); 
+                escribir_valor(predecesor, node.pos, index); //Se reemplaza con el predecesor
+                remover(test_node_1.pos, predecesor); //Se elimina el predecesor en el hijo izquierdo
+            } else if (test_node_2.numero_elementos >= orden){
+                int sucesor = obtener_sucesor(node.pos, index);
+                escribir_valor(sucesor, node.pos, index); //Se reemplaza con el sucesor
+                remover(test_node_2.pos, sucesor); //Se elimina el sucesor en el hijo derecho
+            } else { //Si el numero de elementos de ammbos hijos es menor al orden se unen ambos hijos. 
+                merge(node.pos, index); 
+                remover(apuntador(node.pos, index), value); //Se remueve el valor del nodo resultante
+            } 
+        } 
+        
+        /* Obtiene el elemento predecesor (mayor de los menores)*/
+        int obtener_predecesor(int node_pos, int index){
+            BTreeNode<T> node;
+            node.read(file, apuntador(node_pos, index)); 
+
+            while (node.hoja != 1) //Se desplaza por los valores extremos derechos mientras no se encuentre en una hoja
+                node.read(file, apuntador(node.pos, node.numero_elementos)); 
+        
+            return valor(node.pos, node.numero_elementos-1); //Regresa el predecesor (mayor de los menores)
+        } 
+        
+        /* Obtiene el elemento sucesor (menor de los mayores)*/
+        int obtener_sucesor(int node_pos, int index){ 
+            BTreeNode<T> node;
+            node.read(file, apuntador(node_pos, index+1)); 
+
+            while (node.hoja != 1) //Se desplaza por los valores extremos izquierdos mientras no esté en una hoja
+                node.read(file, apuntador(node.pos, 0)); 
+        
+            return valor(node.pos, 0); //Regresa el sucesor (menor de los mayores)
+        } 
+        
+        /* Llena un nodo que se ha quedado con menos elementos que los establecidos 
+        por el orden utilizando valores pertenecientes a uno de sus nodos hermanos*/ 
+        void llenar(int node_pos, int index) 
+        { 
+            BTreeNode<T> node, previous, next; 
+            //Se obtiene el nodo anterior y el siguiente
+            node.read(file, node_pos);
+            previous.read(file, apuntador(node.pos, index-1)); 
+            next.read(file, apuntador(node.pos, index+1));
+
+            //Se transfieren elementos del nodo con más elementos al nodo con menos elementos
+            if (index != 0 && previous.numero_elementos >= orden)
+                tomar_anterior(node.pos, index);
+            else if (index != node.numero_elementos && next.numero_elementos >= orden)
+                tomar_siguiente(node.pos, index);
+            else { //Se realiza un merge entre nodos hermanos
+                if (index != node.numero_elementos) 
+                    merge(node.pos, index);
+                else
+                    merge(node.pos, index-1);
+            }
+        } 
+        
+        /* Se transfiere un valor del nodo hijo izquierdo al nodo actual*/
+        void tomar_anterior(int pos_node, int index){ 
+            BTreeNode<T> node, child, sibling; 
+            node.read(file, pos_node);
+            child.read(file, apuntador(node.pos, index)); 
+            sibling.read(file, apuntador(node.pos, index-1));
+        
+            for (int i=child.numero_elementos-1; i>=0; --i) //Se desplazan hacia la derecha los elementos del nodo hijo
+                escribir_valor(valor(child.pos, i), child.pos, i+1); 
+        
+            if (child.hoja != 1){ //Se recorren los apuntadores en caso de no haber sido un nodo hijo
+                for (int i=child.numero_elementos; i>=0; --i)
+                    escribir_apuntador(apuntador(child.pos, i), child.pos, i+1);
+            }
+        
+            escribir_valor(valor(node.pos, index-1), child.pos, 0); //Se coloca el elemento del indice en el nodo actual en el nodo hijo
+        
+            if (child.hoja != 1) //Se recorre el último apuntador del nodo hermano del hijo  al nodo hijo
+                escribir_apuntador(apuntador(sibling.pos, sibling.numero_elementos), child.pos, 0);
+        
+            //El último elemento del nodo hermano del hijo se coloca en el padre
+            escribir_valor(valor(sibling.pos, sibling.numero_elementos-1), node.pos, index-1);
+        
+            //Se actualiza el numero de elementos tanto en el hijo como en su hermano
+            actualizar_numero_elementos(child.numero_elementos+1, child.pos);
+            actualizar_numero_elementos(sibling.numero_elementos-1, sibling.pos);
+        } 
+        
+        /* Se transfiere un valor del nodo hijo derecho al nodo actual */
+        void tomar_siguiente(int node_pos, int index){ 
+            BTreeNode<T> node, child, sibling; 
+            node.read(file, node_pos);
+            child.read(file, apuntador(node.pos, index));
+            sibling.read(file, apuntador(node.pos, index+1));  
+
+            //El elemento en el indice se vuelve el ultimo elemento del hijo
+            escribir_valor(valor(node.pos, index), child.pos, child.numero_elementos);
+        
+            if (child.hoja != 1) //Se transfiere el primer apuntador del nodo hermano al último del nodo hijo
+                escribir_apuntador(apuntador(sibling.pos, 0), child.pos, child.numero_elementos+1);
+        
+            escribir_valor(valor(sibling.pos, 0), node.pos, index); //Se transifere valor entre nodo hermano y nodo hijo
+        
+            for (int i=1; i<sibling.numero_elementos; ++i) //Se recorren hacia la izquierda los elementos en el nodo hermano
+                escribir_valor(valor(sibling.pos, i), sibling.pos, i-1);
+        
+            if (sibling.hoja != 1){ //Se recorren hacia la izquierda los apuntadores en el nodo hermano
+                for (int i=1; i<=sibling.numero_elementos; ++i)
+                    escribir_apuntador(apuntador(sibling.pos, i), sibling.pos, i-1);
+            }
+        
+            //Se actualiza el numero de elementos tanto en el hijo como en su hermano
+            actualizar_numero_elementos(child.numero_elementos+1, child.pos);
+            actualizar_numero_elementos(sibling.numero_elementos-1, sibling.pos); 
+        } 
+        
+        /*Se unen los elementos de 2 nodos hijos de un nodo dado, 
+        dejando un solo nodo y eliminando el otro como resultado*/
+        void merge(int node_pos, int index) 
+        { 
+            BTreeNode<T> node, child, sibling; 
+            node.read(file, node_pos);
+            child.read(file, apuntador(node.pos, index));
+            sibling.read(file, apuntador(node.pos, index+1));
+        
+            //Se transfiere el elemento en cuestión del nodo actual al hijo
+            escribir_valor(valor(node.pos, index), child.pos, orden-1); 
+        
+            //Se copian los elementos y apuntadores del nodo hermano al hijo
+            for (int i=0; i<sibling.numero_elementos; ++i) 
+                escribir_valor(valor(sibling.pos, i), child.pos, i+orden);
+            if (child.hoja != 1) { 
+                for(int i=0; i<=sibling.numero_elementos; ++i) 
+                    escribir_apuntador(apuntador(sibling.pos, i), child.pos, i+orden);
+            } 
+        
+            //Se dezplazan los elementos y apuntadores en el nodo padre una posición
+            for (int i=index+1; i<node.numero_elementos; ++i)
+                escribir_valor(valor(node.pos, i), node.pos, i-1);
+            for (int i=index+2; i<=node.numero_elementos; ++i)
+                escribir_apuntador(apuntador(node.pos, i), node.pos, i-1);
+        
+            //Se actualiza el numero de elementos en el nodo hijo (nodo resultante) y el padre, y se descarta el nodo hermano
+            actualizar_numero_elementos(child.numero_elementos+sibling.numero_elementos+1, child.pos);
+            actualizar_numero_elementos(node.numero_elementos-1, node.pos); 
+            actualizar_numero_elementos(-1, sibling.pos); 
+        } 
+
+    public: 
+        /* Constructor de la clase 'BTree' en donde se establece el orden que abrá
+        de seguir el arbol y los nodos */ 
+        BTree(int orden){
+            this->orden = orden; 
+            max = 2*orden-1; 
+        }
+        ~BTree(){
+            fclose(file);
+        }
+
+        /* Inserción de elementos en el arbol B, depende de que el arbol tenga
+        elementos, su raiz este llena o incompleta para poder ingresar valores */
+        void insertar(int value){ 
+            if (root.pos == -1){ //Caso en el que el arbol se encuentra vacío 
+                crear_nodo(1); 
+                escribir_valor(value, 0, 0); 
+                root.read(file, 0); 
+                actualizar_numero_elementos(root.numero_elementos+1, root.pos); 
+                root.read(file, root.pos); 
+            } else { 
+                if (root.numero_elementos == max){ //la raíz esta llena
+                    //Se crea un nuevo nodo y se coloca un apuntador hacia la vieja raiz
+                    int posicion_nueva_raiz = crear_nodo(0);
+                    escribir_apuntador(root.pos, posicion_nueva_raiz, 0); 
+
+                    dividir(0, posicion_nueva_raiz, root.pos); //División de la raíz previa
+        
+                    int i = 0; 
+                    if (valor(posicion_nueva_raiz, i) < value) 
+                        i++; 
+                    insertar_a_nodo_incompleto(apuntador(posicion_nueva_raiz, i), value);
+        
+                    root.read(file, posicion_nueva_raiz); //Se actualiza la raiz
+                } 
+                else { // La raiz no esta llena
+                    insertar_a_nodo_incompleto(root.pos, value);
+                    root.read(file, root.pos);
+                }
+            } 
+        } 
+
+        /* Encontrar un valor dado dentro de la estructura del árbol. Función 
+        auxiliar de 'buscarAux' para evitar llamara al nodo raiz */
+        T buscar(int value){
+            return buscarAux(root.pos, value); 
+        }
+
+        /* Se elimina el valor establecido dentro del nodo dado. 
+        Función auxiliar de 'remover' que se encarga de cambiar 
+        la raiz en caso de que la raíz actual se quede sin elementos */
+        void eliminar(int value){ 
+            if (root.pos == -1) 
+                return; 
+        
+            remover(root.pos, value); 
+        
+            root.read(file, root.pos);
+            if (root.numero_elementos == 0){
+                if(root.hoja == 1)
+                    root.pos == -1; //El arbol se convierte en vacío
+                else  {
+                    actualizar_numero_elementos(-1, root.pos); //Se identifica que la raíz antigua deja de ser un nodo
+                    root.read(file, apuntador(root.pos, 0)); //La raiz ahora es el primer apuntador de la raiz vieja
+                }
+            }
+        } 
+
+        /* Se recorre el arbol en orden. Función auxiliar 
+        de 'recorrerAux' para evitar llamara al nodo raiz */
+        void recorrer(){
+            cout<<"Impresión de los valores en orden: "<<endl;
+            recorrerAux(root.pos);
+            cout<<endl;
+        }  
+
         /*Imprime una 'version grafica' del arbol para ser analizada */
         void imprimirNumeros(){
             int last, temp;
@@ -235,33 +484,47 @@ class BTree{
 int main(){
     BTree<int> t(3); 
 
-    t.insertar(10); 
-    t.insertar(20); 
-    t.insertar(5); 
-    t.insertar(6); 
-    t.insertar(12); 
-    t.insertar(30); 
+    t.insertar(1); 
+    t.insertar(3); 
     t.insertar(7); 
-    t.insertar(17);
-    t.insertar(8);
-    t.insertar(19);
-    t.insertar(31);
-    t.insertar(1);
-    t.insertar(2);
-    t.insertar(40);
-    t.insertar(45);
-    t.insertar(35);
-    t.insertar(32);
-    t.insertar(50);
-    t.insertar(51);
-    t.insertar(55);
-    t.insertar(60);
-    t.insertar(70);
+    t.insertar(10); 
+    t.insertar(11); 
+    t.insertar(13); 
+    t.insertar(14); 
+    t.insertar(15); 
+    t.insertar(18); 
+    t.insertar(16); 
+    t.insertar(19); 
+    t.insertar(24); 
+    t.insertar(25); 
+    t.insertar(26); 
+    t.insertar(21); 
+    t.insertar(4); 
+    t.insertar(5); 
+    t.insertar(20); 
+    t.insertar(22); 
+    t.insertar(2); 
+    t.insertar(17); 
+    t.insertar(12); 
+    t.insertar(6); 
+  
+    t.recorrer(); 
+    cout << endl; 
+
+    t.eliminar(6); 
+    t.eliminar(13); 
+    t.eliminar(7); 
+
+    cout<<t.buscar(2)<<endl; 
+    cout<<t.buscar(7)<<endl;
+    cout << endl; 
+
+    t.eliminar(4); 
+    t.eliminar(2); 
+    t.eliminar(16); 
 
     t.recorrer(); 
-
-    cout<<endl; 
-    t.imprimirNumeros();
+    cout << endl; 
 
     return 0; 
 }
