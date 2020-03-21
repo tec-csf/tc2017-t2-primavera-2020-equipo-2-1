@@ -78,7 +78,8 @@ int main(){
     cout<<endl; 
 
     int elementos_aleatorios[numero_elementos]; 
-    grado_B = numero_elementos/100000+6; //Variar el grado del arbol B en medida que crece su contenido
+    grado_B = numero_elementos/100000+5; //Variar el grado del arbol B en medida que crece su contenido
+    grado_B = (grado_B > 20? 20 : grado_B);
     rango = numero_elementos*3; //Para evitar mucho elementos repetidos (los cuales no se incluyen en un AVL)
 
     AVL<int> avl; 
