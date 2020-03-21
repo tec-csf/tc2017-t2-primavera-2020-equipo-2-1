@@ -1,96 +1,131 @@
-#include <iostream> // cin y cout
-#include <cstdlib>  // rand() y srand()
-#include <fstream>  // archivos
-#include <string>   // substr()
-#include <cstdio>   // printf()
-#include <ctime>    // time() [para rands] y clock()
-#include <stack>
-#include <vector>
-
-#include "functions.hpp"
+#include <iostream>
+#include <chrono>
+#include <cstdio>
+#include <string>
+#include "avl.cpp"
+#include "BTree.cpp"
 using namespace std;
+using namespace std::chrono;
 
+void insertar_n_elementos(AVL<int> *avl, BTree<int> *b, int* array, int num){
+    auto inicio=high_resolution_clock::now();
+    for (int i=0; i<num; ++i)
+        avl->insertar(array[i]);
+    auto fin=high_resolution_clock::now();
+    auto duracion_avl=fin-inicio;
+    int d_avl =duration_cast<milliseconds>(duracion_avl).count();
 
-int main()
-{
-    cout << "\n\n\n\n\t\t-----INICIO PROGRAMA-----\n\n\n\n\n";
+    inicio=high_resolution_clock::now();
+    for (int i=0; i<num; ++i)
+        b->insertar(array[i]);
+    fin=high_resolution_clock::now();
+    auto duracion_b=fin-inicio;
+    int d_b =duration_cast<milliseconds>(duracion_b).count();
 
-    int choice;
+    printf(" |  %-14s | %-1d miliseg %14s| \n", "AVL", d_avl, "");
+    printf(" %s\n", "|-------------------------------------------|");
+    printf(" |  %-14s | %-1d miliseg %14s| \n", "B", d_b, "");
+    printf(" %s\n", "|-------------------------------------------|");
+}
 
-    cout << "Árboles" << '\n';
-    cout << "¿Qué tipo de árbol quieres?" << '\n';
-    cout << "\t 1. AVL (Memoria Interna)" << '\n';
-    cout << "\t 2. B (Memoria Externa)" << '\n';
-    cout << "\n Tu opción [1-2]: ";
-    cin >> choice;
-    cout << endl;
+void buscar_elementos(AVL<int> *avl, BTree<int> *b, int value){
+    auto inicio=high_resolution_clock::now(); 
+    avl->buscar(value); 
+    auto fin=high_resolution_clock::now();
+    auto duracion_avl=fin-inicio;
+    string busqueda_avl = ((avl->buscar(value) != value)? "NO ENCONTRADO" : "ENCONTRADO");
 
-    switch (choice)
-    {
-        char option;
+    inicio=high_resolution_clock::now();
+    b->buscar(value);
+    fin=high_resolution_clock::now();
+    auto duracion_b=fin-inicio;
+    string busqueda_b = ((b->buscar(value) != value)? "NO ENCONTRADO" : "ENCONTRADO");
 
-        case 1:
-        {
-        Arbol* avl = new Arbol;
+    int d_avl = duration_cast<microseconds>(duracion_avl).count(); 
+    int d_b = duration_cast<microseconds>(duracion_b).count();
 
-        cout << "Árboles AVL" << '\n';
-        cout << "Se ha generado un arbol con tamaño 10 aleatoriamente." << '\n';
-        cout << "¿Qué quieres hacer con tu árbol?" << '\n';
-        cout << "\t a. Agregar nodo" << '\n';
-        cout << "\t b. Eliminar nodo" << '\n';
-        cout << "\t c. Buscar nodo" << '\n';
-        cout << "\n Tu opción [a-c]: ";
-        cin >> option;
-        cout << endl;
+    printf(" |  %-14d | ", value);
+    cout<<busqueda_avl; 
+    printf("%-1s\t | %-1d microseg %-7s | ", "", d_avl, "");
+    cout<<busqueda_b; 
+    printf("%-1s\t    | %-1d microseg %-6s | \n", "", d_b, "");
+    printf(" %s\n", "|-------------------------------------------------------------------------------------------------------|");
+}
 
-        switch (option)
-        {
-            case 'a':
-            avl->agregar(4);
-            break;
+void eliminar_elementos(AVL<int> *avl, BTree<int> *b, int value){
+    auto inicio=high_resolution_clock::now(); 
+    avl->eliminar(value);
+    auto fin=high_resolution_clock::now();
+    auto duracion_avl=fin-inicio;
 
-            case 'b':
-            avl->eliminar(4);
-            break;
+    inicio=high_resolution_clock::now();
+    avl->eliminar(value);
+    fin=high_resolution_clock::now();
+    auto duracion_b=fin-inicio;
 
-            case 'c':
-            avl->buscar(4);
-            break;
-        }
-        avl->~Arbol(); // PARA QUE NO HAYA FUGAS!!
-        break;
-        }
-        case 2:
-        {
-        Arbol* b = new Arbol;
+    int d_avl = duration_cast<microseconds>(duracion_avl).count(); 
+    int d_b = duration_cast<microseconds>(duracion_b).count();
 
-        cout << "\nÁrboles B" << '\n';
-        cout << "Se ha generado un arbol con tamaño 10 aleatoriamente." << '\n';
-        cout << "¿Qué quieres hacer con tu árbol?" << '\n';
-        cout << "\t a. Agregar nodo" << '\n';
-        cout << "\t b. Eliminar nodo" << '\n';
-        cout << "\t c. Buscar nodo" << '\n';
-        cout << "\nTu opción [a-c]: ";
-        cin >> option;
-        cout << endl;
+    printf(" |  %-14d | %-1d microseg%-11s | %-1d microseg%-9s | \n", value, d_avl, "", d_b, "");
+    printf(" %s\n", "|---------------------------------------------------------------|");
+}
 
-        switch (option)
-        {
-            case 'a':
-            b->agregar(4);
-            break;
+int main(){
+    int numero_elementos, grado_B, rango;
+    int elementos_prueba[10]; 
+    cout<<"Ingrese la cantidad de elementos a ingresar a los arboles: "; 
+    cin>>numero_elementos; 
+    cout<<endl; 
 
-            case 'b':
-            b->eliminar(4);
-            break;
+    int elementos_aleatorios[numero_elementos]; 
+    grado_B = numero_elementos/100000+6; //Variar el grado del arbol B en medida que crece su contenido
+    rango = numero_elementos*3; //Para evitar mucho elementos repetidos (los cuales no se incluyen en un AVL)
 
-            case 'c':
-            b->buscar(4);
-            break;
-        }
-        b->~Arbol();
-        break;
-      }
+    AVL<int> avl; 
+    BTree<int> b(grado_B); 
+
+    for (int i=0; i<numero_elementos; ++i){
+        elementos_aleatorios[i] = (rand()%rango)+1; 
     }
-    cout << "\n\n\t\t-----FIN PROGRAMA-----\n\n";
+
+    printf("%s\n", " _____________________________________________");
+    printf(" |%15s %-1d %-20s| \n", "INSERTAR", numero_elementos, "ELEMENTOS");
+    printf(" %s\n", "|-------------------------------------------|");
+    insertar_n_elementos(&avl, &b, elementos_aleatorios, numero_elementos); 
+    cout<<endl;
+
+    cout<<endl<<"Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada arbol: "<<endl;
+    for (int i=0; i<10; ++i){
+        elementos_prueba[i] = (rand()%rango)+1; 
+        cout<<elementos_prueba[i]<<" "; 
+    }
+    cout<<endl; 
+
+    printf("%s\n", " _________________________________________________________________________________________________________");
+    printf(" |%50s %-52s| \n", "BUSCAR", "");
+    printf(" %s\n", "|-------------------------------------------------------------------------------------------------------|");
+    printf(" |  %-14s | %-40s | %-40s | \n", "Valor", "AVL", "Arbol B" );
+    printf(" %s\n", "|-------------------------------------------------------------------------------------------------------|");
+    printf(" |%-16s | %-19s | %-18s | %-19s | %-18s | \n", "", "Estado", "Tiempo", "Estado", "Tiempo");
+    printf(" %s\n", "|-------------------------------------------------------------------------------------------------------|");
+    for (int i=0; i<10; ++i){
+        buscar_elementos(&avl, &b, elementos_prueba[i]);
+    }
+
+    cout<<endl;
+
+    printf("%s\n", " _________________________________________________________________");
+    printf(" |%33s %-29s| \n", "ELIMINAR", "");
+    printf(" %s\n", "|---------------------------------------------------------------|");
+    printf(" |  %-14s | %-20s | %-20s | \n", "Valor", "AVL", "Arbol B" );
+    printf(" %s\n", "|---------------------------------------------------------------|");
+    printf(" |  %-14s | %-20s | %-20s | \n", "", "Tiempo", "Tiempo" );
+    printf(" %s\n", "|---------------------------------------------------------------|");
+    for (int i=0; i<10; ++i){
+        eliminar_elementos(&avl, &b, elementos_prueba[i]);
+    }
+
+    cout<<endl;
+
+    return 0; 
 }

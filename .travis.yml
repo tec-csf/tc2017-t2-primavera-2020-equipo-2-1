@@ -13,5 +13,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script:
-  - g++ sources/functions.cpp sources/main.cpp -o a -std=c++17 -o t2
-  - ./t2 < sources/test.txt
+  - g++ sources/main.cpp sources/avl.cpp sources/BTree.cpp -o a -std=c++17 -o t2
+  - ./t2

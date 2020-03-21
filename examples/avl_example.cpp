@@ -261,3 +261,35 @@ class AVL{
             }  
         }  
 };  
+  
+int main()  
+{  
+    AVL<int> arbol;  
+      
+    //Valores de prueba
+    arbol.insertar(9);  
+    arbol.insertar(5);  
+    arbol.insertar(10);  
+    arbol.insertar(0);  
+    arbol.insertar(6);  
+    arbol.insertar(11);
+    arbol.insertar(-1); 
+    arbol.insertar(1); 
+    arbol.insertar(2);
+
+    cout << "Arbol en orden previo a eliminación de 10:\n";  
+    arbol.inOrder(); 
+    cout << "Arbol en pre orden previo a eliminación de 10:\n";  
+    arbol.preOrder();   
+
+    arbol.eliminar(10);
+
+    cout << "Arbol en orden despues de eliminar 10:\n";  
+    arbol.inOrder(); 
+    cout << "Arbol en pre orden despues de eliminar 10:\n";  
+    arbol.preOrder(); 
+
+    cout<<arbol.buscar(2)<<endl;
+      
+    return 0;  
+} 

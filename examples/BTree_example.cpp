@@ -480,3 +480,51 @@ class BTree{
             cout<<endl;
         }
 };
+
+int main(){
+    BTree<int> t(3); 
+
+    t.insertar(1); 
+    t.insertar(3); 
+    t.insertar(7); 
+    t.insertar(10); 
+    t.insertar(11); 
+    t.insertar(13); 
+    t.insertar(14); 
+    t.insertar(15); 
+    t.insertar(18); 
+    t.insertar(16); 
+    t.insertar(19); 
+    t.insertar(24); 
+    t.insertar(25); 
+    t.insertar(26); 
+    t.insertar(21); 
+    t.insertar(4); 
+    t.insertar(5); 
+    t.insertar(20); 
+    t.insertar(22); 
+    t.insertar(2); 
+    t.insertar(17); 
+    t.insertar(12); 
+    t.insertar(6); 
+  
+    t.recorrer(); 
+    cout << endl; 
+
+    t.eliminar(6); 
+    t.eliminar(13); 
+    t.eliminar(7); 
+
+    cout<<t.buscar(2)<<endl; 
+    cout<<t.buscar(7)<<endl;
+    cout << endl; 
+
+    t.eliminar(4); 
+    t.eliminar(2); 
+    t.eliminar(16); 
+
+    t.recorrer(); 
+    cout << endl; 
+
+    return 0; 
+}
