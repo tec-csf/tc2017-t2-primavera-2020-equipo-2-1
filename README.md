@@ -39,7 +39,7 @@ El proyecto debe seguir la siguiente estructura de carpetas:
 ```
 
 ## 2. Solución
-
+---
 #### Árbol AVL
 La solución implementada para la construcción del árbol AVL en memoria se baso en la implementación recursiva de un arbol binario común. Para ello, se crearon nodos simliares a aquellos utilizados en una árbol binario, únicamente que los nodos utilizados en el AVL contienen una variable que almacena la altura que los nodos tienen dentro del arbol. De esta manera, utilizando la altura de los nodos dentro del arbol, un nodo padre puede conocer su factor de balanceo realizando una diferencia entre las alturas de los 2 nodos hijos y dependiendo de hacia donde se encuentre cargado, podrá realizar las rotaciones correspondientes. Se definieron metodos responsables de realizar las rotaciones (rotación simple a la derecha, rotacion simple a la izquierda, rotación doble a la derecha y rotación doble a ala izquierda) de manera que métodos con la capacidad de desbalancear el árbol, como lo son *insertar* y *eliminar* fueran capaces de regresar al árbol a su estado balanceado. De esta manera, cada vez que se inserta o elimina un nodo dentro del árbol, se verifica el factor de balanceo en cada uno de los nodos recorridos y, en caso de ser mayor a 1 o menor a -1, se realizarán las rotaciones correspondientes a ese caso en especifico. Finalmente, la operación de *buscar* funciona de la misma manera que los hace un árbol binario, recursivamente, para este método no se requieren rotaciones. 
 ---
