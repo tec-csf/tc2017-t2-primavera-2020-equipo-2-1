@@ -1,0 +1,3 @@
+Ingrese la cantidad de elementos a ingresar a los arboles: 3000000
+
+Segmentation fault
