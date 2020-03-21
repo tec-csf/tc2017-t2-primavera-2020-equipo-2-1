@@ -15,3 +15,4 @@ install:
 script:
   - g++ sources/main.cpp sources/avl.cpp sources/BTree.cpp -o a -std=c++17 -o t2
   - ./t2
+  - 1000
