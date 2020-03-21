@@ -59,7 +59,7 @@ void eliminar_elementos(AVL<int> *avl, BTree<int> *b, int value){
     auto duracion_avl=fin-inicio;
 
     inicio=high_resolution_clock::now();
-    avl->eliminar(value);
+    b->eliminar(value);
     fin=high_resolution_clock::now();
     auto duracion_b=fin-inicio;
 
