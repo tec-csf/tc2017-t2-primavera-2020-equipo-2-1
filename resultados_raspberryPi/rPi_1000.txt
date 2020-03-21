@@ -1,4 +1,4 @@
-Ingrese la cantidad de elementos a ingresar a los arboles: 1000     
+Ingrese la cantidad de elementos a ingresar a los arboles: 1000               
 
  _____________________________________________
  |       INSERTAR 1000 ELEMENTOS           | 
@@ -18,25 +18,25 @@ Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada a
  |-------------------------------------------------------------------------------------------------------|
  |                 | Estado              | Tiempo             | Estado              | Tiempo             | 
  |-------------------------------------------------------------------------------------------------------|
- |  2694           | NO ENCONTRADO 	 | 5 microseg         | NO ENCONTRADO 	    | 85 microseg        | 
+ |  2694           | NO ENCONTRADO 	 | 3 microseg         | NO ENCONTRADO 	    | 83 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  335            | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 75 microseg        | 
+ |  335            | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 76 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  440            | NO ENCONTRADO 	 | 3 microseg         | NO ENCONTRADO 	    | 68 microseg        | 
+ |  440            | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 68 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  335            | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 80 microseg        | 
+ |  335            | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 81 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
  |  2422           | ENCONTRADO 	 | 1 microseg         | ENCONTRADO 	    | 67 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  2160           | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 62 microseg        | 
+ |  2160           | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 65 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  1986           | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 69 microseg        | 
+ |  1986           | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 73 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  958            | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 72 microseg        | 
+ |  958            | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 75 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  2355           | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 70 microseg        | 
+ |  2355           | NO ENCONTRADO 	 | 2 microseg         | NO ENCONTRADO 	    | 71 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  762            | ENCONTRADO 	 | 2 microseg         | ENCONTRADO 	    | 96 microseg        | 
+ |  762            | ENCONTRADO 	 | 4 microseg         | ENCONTRADO 	    | 98 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
 
  _________________________________________________________________
@@ -46,23 +46,23 @@ Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada a
  |---------------------------------------------------------------|
  |                 | Tiempo               | Tiempo               | 
  |---------------------------------------------------------------|
- |  2694           | 7 microseg            | 3 microseg          | 
+ |  2694           | 8 microseg            | 623 microseg          | 
  |---------------------------------------------------------------|
- |  335            | 5 microseg            | 4 microseg          | 
+ |  335            | 5 microseg            | 600 microseg          | 
  |---------------------------------------------------------------|
- |  440            | 6 microseg            | 4 microseg          | 
+ |  440            | 5 microseg            | 121 microseg          | 
  |---------------------------------------------------------------|
- |  335            | 4 microseg            | 4 microseg          | 
+ |  335            | 4 microseg            | 149 microseg          | 
  |---------------------------------------------------------------|
- |  2422           | 18 microseg            | 3 microseg          | 
+ |  2422           | 20 microseg            | 743 microseg          | 
  |---------------------------------------------------------------|
- |  2160           | 5 microseg            | 4 microseg          | 
+ |  2160           | 5 microseg            | 80 microseg          | 
  |---------------------------------------------------------------|
- |  1986           | 5 microseg            | 4 microseg          | 
+ |  1986           | 5 microseg            | 123 microseg          | 
  |---------------------------------------------------------------|
- |  958            | 6 microseg            | 3 microseg          | 
+ |  958            | 5 microseg            | 583 microseg          | 
  |---------------------------------------------------------------|
- |  2355           | 4 microseg            | 3 microseg          | 
+ |  2355           | 5 microseg            | 558 microseg          | 
  |---------------------------------------------------------------|
- |  762            | 5 microseg            | 3 microseg          | 
+ |  762            | 5 microseg            | 204 microseg          | 
  |---------------------------------------------------------------|

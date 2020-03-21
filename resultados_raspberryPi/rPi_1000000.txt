@@ -3,9 +3,9 @@ Ingrese la cantidad de elementos a ingresar a los arboles: 1000000
  _____________________________________________
  |       INSERTAR 1000000 ELEMENTOS           | 
  |-------------------------------------------|
- |  AVL            | 11070 miliseg               | 
+ |  AVL            | 11196 miliseg               | 
  |-------------------------------------------|
- |  B              | 580826 miliseg               | 
+ |  B              | 580190 miliseg               | 
  |-------------------------------------------|
 
 
@@ -18,25 +18,25 @@ Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada a
  |-------------------------------------------------------------------------------------------------------|
  |                 | Estado              | Tiempo             | Estado              | Tiempo             | 
  |-------------------------------------------------------------------------------------------------------|
- |  126690         | NO ENCONTRADO 	 | 8 microseg         | NO ENCONTRADO 	    | 140 microseg        | 
+ |  126690         | NO ENCONTRADO 	 | 8 microseg         | NO ENCONTRADO 	    | 145 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  2371364        | ENCONTRADO 	 | 10 microseg         | ENCONTRADO 	    | 154 microseg        | 
+ |  2371364        | ENCONTRADO 	 | 7 microseg         | ENCONTRADO 	    | 158 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  946885         | NO ENCONTRADO 	 | 9 microseg         | NO ENCONTRADO 	    | 155 microseg        | 
+ |  946885         | NO ENCONTRADO 	 | 7 microseg         | NO ENCONTRADO 	    | 154 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  848594         | NO ENCONTRADO 	 | 6 microseg         | NO ENCONTRADO 	    | 169 microseg        | 
+ |  848594         | NO ENCONTRADO 	 | 7 microseg         | NO ENCONTRADO 	    | 164 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  2139382        | NO ENCONTRADO 	 | 8 microseg         | NO ENCONTRADO 	    | 153 microseg        | 
+ |  2139382        | NO ENCONTRADO 	 | 6 microseg         | NO ENCONTRADO 	    | 155 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  681756         | ENCONTRADO 	 | 9 microseg         | ENCONTRADO 	    | 211 microseg        | 
+ |  681756         | ENCONTRADO 	 | 5 microseg         | ENCONTRADO 	    | 284 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  572207         | NO ENCONTRADO 	 | 5 microseg         | NO ENCONTRADO 	    | 229 microseg        | 
+ |  572207         | NO ENCONTRADO 	 | 5 microseg         | NO ENCONTRADO 	    | 231 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  1790994        | NO ENCONTRADO 	 | 6 microseg         | NO ENCONTRADO 	    | 184 microseg        | 
+ |  1790994        | NO ENCONTRADO 	 | 8 microseg         | NO ENCONTRADO 	    | 183 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  739962         | NO ENCONTRADO 	 | 5 microseg         | NO ENCONTRADO 	    | 124 microseg        | 
+ |  739962         | NO ENCONTRADO 	 | 6 microseg         | NO ENCONTRADO 	    | 126 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  214751         | NO ENCONTRADO 	 | 7 microseg         | NO ENCONTRADO 	    | 154 microseg        | 
+ |  214751         | NO ENCONTRADO 	 | 7 microseg         | NO ENCONTRADO 	    | 157 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
 
  _________________________________________________________________
@@ -46,24 +46,23 @@ Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada a
  |---------------------------------------------------------------|
  |                 | Tiempo               | Tiempo               | 
  |---------------------------------------------------------------|
- |  126690         | 16 microseg            | 7 microseg          | 
+ |  126690         | 16 microseg            | 2387 microseg          | 
  |---------------------------------------------------------------|
- |  2371364        | 30 microseg            | 7 microseg          | 
+ |  2371364        | 35 microseg            | 2564 microseg          | 
  |---------------------------------------------------------------|
- |  946885         | 15 microseg            | 25 microseg          | 
+ |  946885         | 19 microseg            | 1847 microseg          | 
  |---------------------------------------------------------------|
- |  848594         | 15 microseg            | 7 microseg          | 
+ |  848594         | 17 microseg            | 2241 microseg          | 
  |---------------------------------------------------------------|
- |  2139382        | 16 microseg            | 8 microseg          | 
+ |  2139382        | 18 microseg            | 2783 microseg          | 
  |---------------------------------------------------------------|
- |  681756         | 16 microseg            | 7 microseg          | 
+ |  681756         | 21 microseg            | 444 microseg          | 
  |---------------------------------------------------------------|
- |  572207         | 13 microseg            | 7 microseg          | 
+ |  572207         | 17 microseg            | 309 microseg          | 
  |---------------------------------------------------------------|
- |  1790994        | 15 microseg            | 7 microseg          | 
+ |  1790994        | 17 microseg            | 1854 microseg          | 
  |---------------------------------------------------------------|
- |  739962         | 12 microseg            | 7 microseg          | 
+ |  739962         | 16 microseg            | 212 microseg          | 
  |---------------------------------------------------------------|
- |  214751         | 10 microseg            | 6 microseg          | 
+ |  214751         | 15 microseg            | 1196 microseg          | 
  |---------------------------------------------------------------|
-

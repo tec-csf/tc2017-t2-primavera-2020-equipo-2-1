@@ -18,7 +18,7 @@ Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada a
  |-------------------------------------------------------------------------------------------------------|
  |                 | Estado              | Tiempo             | Estado              | Tiempo             | 
  |-------------------------------------------------------------------------------------------------------|
- |  3              | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 12 microseg        | 
+ |  3              | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 13 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
  |  8              | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 11 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
@@ -26,13 +26,13 @@ Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada a
  |-------------------------------------------------------------------------------------------------------|
  |  20             | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 21 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  24             | ENCONTRADO 	 | 0 microseg         | ENCONTRADO 	    | 23 microseg        | 
+ |  24             | ENCONTRADO 	 | 0 microseg         | ENCONTRADO 	    | 24 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
  |  17             | ENCONTRADO 	 | 0 microseg         | ENCONTRADO 	    | 19 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  1              | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 9 microseg        | 
+ |  1              | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 8 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  7              | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 11 microseg        | 
+ |  7              | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 10 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
  |  23             | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 21 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
@@ -46,23 +46,23 @@ Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada a
  |---------------------------------------------------------------|
  |                 | Tiempo               | Tiempo               | 
  |---------------------------------------------------------------|
- |  3              | 2 microseg            | 1 microseg          | 
+ |  3              | 3 microseg            | 14 microseg          | 
  |---------------------------------------------------------------|
- |  8              | 2 microseg            | 1 microseg          | 
+ |  8              | 1 microseg            | 13 microseg          | 
  |---------------------------------------------------------------|
- |  21             | 1 microseg            | 1 microseg          | 
+ |  21             | 1 microseg            | 24 microseg          | 
  |---------------------------------------------------------------|
- |  20             | 1 microseg            | 1 microseg          | 
+ |  20             | 1 microseg            | 24 microseg          | 
  |---------------------------------------------------------------|
- |  24             | 8 microseg            | 1 microseg          | 
+ |  24             | 7 microseg            | 121 microseg          | 
  |---------------------------------------------------------------|
- |  17             | 3 microseg            | 1 microseg          | 
+ |  17             | 2 microseg            | 134 microseg          | 
  |---------------------------------------------------------------|
- |  1              | 1 microseg            | 1 microseg          | 
+ |  1              | 1 microseg            | 12 microseg          | 
  |---------------------------------------------------------------|
- |  7              | 1 microseg            | 1 microseg          | 
+ |  7              | 1 microseg            | 13 microseg          | 
  |---------------------------------------------------------------|
- |  23             | 1 microseg            | 1 microseg          | 
+ |  23             | 1 microseg            | 22 microseg          | 
  |---------------------------------------------------------------|
- |  17             | 1 microseg            | 1 microseg          | 
+ |  17             | 1 microseg            | 113 microseg          | 
  |---------------------------------------------------------------|

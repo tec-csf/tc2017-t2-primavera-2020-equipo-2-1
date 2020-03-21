@@ -1,4 +1,4 @@
-Ingrese la cantidad de elementos a ingresar a los arboles: 100      
+Ingrese la cantidad de elementos a ingresar a los arboles: 100 
 
  _____________________________________________
  |       INSERTAR 100 ELEMENTOS           | 
@@ -18,25 +18,25 @@ Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada a
  |-------------------------------------------------------------------------------------------------------|
  |                 | Estado              | Tiempo             | Estado              | Tiempo             | 
  |-------------------------------------------------------------------------------------------------------|
- |  196            | ENCONTRADO 	 | 1 microseg         | ENCONTRADO 	    | 40 microseg        | 
+ |  196            | ENCONTRADO 	 | 1 microseg         | ENCONTRADO 	    | 35 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  71             | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 33 microseg        | 
+ |  71             | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 34 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  135            | ENCONTRADO 	 | 1 microseg         | ENCONTRADO 	    | 45 microseg        | 
+ |  135            | ENCONTRADO 	 | 1 microseg         | ENCONTRADO 	    | 47 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  179            | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 47 microseg        | 
+ |  179            | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 48 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  168            | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 36 microseg        | 
+ |  168            | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 39 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  202            | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 34 microseg        | 
+ |  202            | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 35 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  198            | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 32 microseg        | 
+ |  198            | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 33 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  3              | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 26 microseg        | 
+ |  3              | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 28 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  118            | NO ENCONTRADO 	 | 0 microseg         | NO ENCONTRADO 	    | 40 microseg        | 
+ |  118            | NO ENCONTRADO 	 | 1 microseg         | NO ENCONTRADO 	    | 43 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
- |  193            | ENCONTRADO 	 | 0 microseg         | ENCONTRADO 	    | 10 microseg        | 
+ |  193            | ENCONTRADO 	 | 0 microseg         | ENCONTRADO 	    | 11 microseg        | 
  |-------------------------------------------------------------------------------------------------------|
 
  _________________________________________________________________
@@ -46,23 +46,23 @@ Los siguientes 10 elementos seran buscados y posteriormente eliminados de cada a
  |---------------------------------------------------------------|
  |                 | Tiempo               | Tiempo               | 
  |---------------------------------------------------------------|
- |  196            | 15 microseg            | 2 microseg          | 
+ |  196            | 20 microseg            | 633 microseg          | 
  |---------------------------------------------------------------|
- |  71             | 3 microseg            | 2 microseg          | 
+ |  71             | 4 microseg            | 43 microseg          | 
  |---------------------------------------------------------------|
- |  135            | 3 microseg            | 3 microseg          | 
+ |  135            | 5 microseg            | 125 microseg          | 
  |---------------------------------------------------------------|
- |  179            | 2 microseg            | 2 microseg          | 
+ |  179            | 3 microseg            | 52 microseg          | 
  |---------------------------------------------------------------|
- |  168            | 3 microseg            | 2 microseg          | 
+ |  168            | 3 microseg            | 41 microseg          | 
  |---------------------------------------------------------------|
- |  202            | 2 microseg            | 2 microseg          | 
+ |  202            | 3 microseg            | 46 microseg          | 
  |---------------------------------------------------------------|
- |  198            | 2 microseg            | 2 microseg          | 
+ |  198            | 3 microseg            | 46 microseg          | 
  |---------------------------------------------------------------|
- |  3              | 3 microseg            | 2 microseg          | 
+ |  3              | 3 microseg            | 28 microseg          | 
  |---------------------------------------------------------------|
- |  118            | 2 microseg            | 2 microseg          | 
+ |  118            | 3 microseg            | 42 microseg          | 
  |---------------------------------------------------------------|
- |  193            | 3 microseg            | 3 microseg          | 
+ |  193            | 4 microseg            | 125 microseg          | 
  |---------------------------------------------------------------|
