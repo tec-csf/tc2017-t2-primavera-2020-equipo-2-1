@@ -2,13 +2,15 @@
 #include <chrono>
 #include <cstdio>
 #include <string>
-#include "avl.cpp"
-#include "BTree.cpp"
+#include "avl_tree.cpp"
+#include "b_tree.cpp"
 
 using namespace std;
 using namespace std::chrono;
 
-void insertar_n_elementos(AVL<int> *avl, BTree<int> *b, int* array, int num){
+
+void insertar_n_elementos(AVL<int> *avl, BTree<int> *b, int* array, int num)
+{
     auto inicio=high_resolution_clock::now();
     for (int i=0; i<num; ++i)
         avl->insertar(array[i]);
@@ -29,7 +31,9 @@ void insertar_n_elementos(AVL<int> *avl, BTree<int> *b, int* array, int num){
     printf(" %s\n", "|-----------------------------------------------|");
 }
 
-void buscar_elementos(AVL<int> *avl, BTree<int> *b, int value){
+
+void buscar_elementos(AVL<int> *avl, BTree<int> *b, int value)
+{
     auto inicio=high_resolution_clock::now();
     avl->buscar(value);
     auto fin=high_resolution_clock::now();
@@ -56,7 +60,9 @@ void buscar_elementos(AVL<int> *avl, BTree<int> *b, int value){
     printf(" %s\n", "|-----------------------------------------------------------------------------------------------|");
 }
 
-void eliminar_elementos(AVL<int> *avl, BTree<int> *b, int value){
+
+void eliminar_elementos(AVL<int> *avl, BTree<int> *b, int value)
+{
     auto inicio=high_resolution_clock::now();
     avl->eliminar(value);
     auto fin=high_resolution_clock::now();
@@ -74,7 +80,9 @@ void eliminar_elementos(AVL<int> *avl, BTree<int> *b, int value){
     printf(" %s\n", "|----------------------------------------------------------------|");
 }
 
-int main(){
+
+int main()
+{
     cout<<"\n\n\n\t\t-----INICIO PROGRAMA-----\n\n\n";
 
     int numero_elementos, grado_B, rango;
