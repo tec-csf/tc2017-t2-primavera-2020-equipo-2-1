@@ -52,7 +52,7 @@ void buscar_elementos(AVL<int> *avl, BTree<int> *b, int value){
     // cout<<busqueda_b;
     printf("%-15s", busqueda_b.c_str());
 
-    printf(" | %-2d microseg %-5s | \n", d_b, " ");
+    printf(" | %-3d microseg %-5s | \n", d_b, " ");
     printf(" %s\n", "|-----------------------------------------------------------------------------------------------|");
 }
 
@@ -70,8 +70,8 @@ void eliminar_elementos(AVL<int> *avl, BTree<int> *b, int value){
     int d_avl = duration_cast<microseconds>(duracion_avl).count();
     int d_b = duration_cast<microseconds>(duracion_b).count();
 
-    printf(" |  %-14d | %-2d microseg%-11s | %-4d microseg%-9s | \n", value, d_avl, "", d_b, "");
-    printf(" %s\n", "|-------------------------------------------------------------------|");
+    printf(" |  %-14d | %-3d microseg %-10s | %-4d microseg%-9s | \n", value, d_avl, "", d_b, "");
+    printf(" %s\n", "|--------------------------------------------------------------------|");
 }
 
 int main(){
@@ -123,13 +123,13 @@ int main(){
 
     cout<<endl;
 
-    printf("%s\n", " _____________________________________________________________________");
-    printf(" |%33s %-32s | \n", "ELIMINAR", "");
+    printf("%s\n", " ______________________________________________________________________");
+    printf(" |%33s %-32s | \n", "ELIMINAR", " ");
+    printf(" %s\n", "|--------------------------------------------------------------------|");
+    printf(" |  %-14s | %-23s | %-20s   | \n", "Valor", "AVL", "Arbol B" );
     printf(" %s\n", "|-------------------------------------------------------------------|");
-    printf(" |  %-14s | %-22s | %-20s   | \n", "Valor", "AVL", "Arbol B" );
-    printf(" %s\n", "|-------------------------------------------------------------------|");
-    printf(" |  %-14s | %-22s | %-20s   | \n", "", "Tiempo", "Tiempo" );
-    printf(" %s\n", "|-------------------------------------------------------------------|");
+    printf(" |  %-14s | %-23s | %-20s   | \n", "", "Tiempo", "Tiempo" );
+    printf(" %s\n", "|--------------------------------------------------------------------|");
     for (int i=0; i<10; ++i){
         eliminar_elementos(&avl, &b, elementos_prueba[i]);
     }
