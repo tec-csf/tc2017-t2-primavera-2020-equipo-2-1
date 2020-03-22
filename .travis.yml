@@ -5,7 +5,7 @@ compiler:
 dist: trusty
 
 before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test 
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-get update -qq
 
 install:
@@ -13,5 +13,5 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
 script:
-  - g++ sources/main.cpp sources/avl.cpp sources/BTree.cpp -o a -std=c++17 -o t2
+  - g++ sources/main.cpp sources/avl_tree.cpp sources/b_tree.cpp -std=c++17 -o t2
   - ./t2 < sources/test.txt
