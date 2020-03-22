@@ -70,13 +70,10 @@ void eliminar_elementos(AVL<int> *avl, BTree<int> *b, int value){
     int d_avl = duration_cast<microseconds>(duracion_avl).count();
     int d_b = duration_cast<microseconds>(duracion_b).count();
 
-<<<<<<< HEAD
-    printf(" |  %-14d | %-3d microseg %-10s | %-4d microseg%-9s | \n", value, d_avl, "", d_b, "");
+    printf(" |  %-14d | %-2d microseg %-10s | %-4d microseg%-9s | \n", value, d_avl, "", d_b, "");
     printf(" %s\n", "|--------------------------------------------------------------------|");
-=======
-    printf(" |  %-14d | %-2d microseg%-11s | %-4d microseg%-9s | \n", value, d_avl, "", d_b, "");
+    printf(" |  %-14d | %-3d microseg%-11s | %-4d microseg%-9s | \n", value, d_avl, "", d_b, "");
     printf(" %s\n", "|-------------------------------------------------------------------|");
->>>>>>> 59844cdbb6b37a3f9db870686f3db51ef3660ca2
 }
 
 int main(){
@@ -89,9 +86,9 @@ int main(){
     cout<<endl;
 
     int elementos_aleatorios[numero_elementos];
-    grado_B = numero_elementos/100000+5; //Variar el grado del arbol B en medida que crece su contenido
+    grado_B = numero_elementos/100000+5; // Variar el grado del arbol B en medida que crece su contenido
     grado_B = (grado_B > 20? 20 : grado_B);
-    rango = numero_elementos*3; //Para evitar mucho elementos repetidos (los cuales no se incluyen en un AVL)
+    rango = numero_elementos*3; // Para evitar mucho elementos repetidos (los cuales no se incluyen en un AVL)
 
     AVL<int> avl;
     BTree<int> b(grado_B);
