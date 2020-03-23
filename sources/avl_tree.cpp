@@ -41,15 +41,20 @@ class AVL
 {
     public:
         /* Función auxiliar para no tener que
-        * estar colocando la raíz en cada llamada.
-        */
+         * estar colocando la raíz en cada llamada.
+				 * @param value: valor genérico que tendrá el nodo creado,
+ 				 * 							para su posterior inserción.
+         */
         void insertar(T value)
         {
             raiz = insertAux(raiz, value);
         }
 
 
-        // Función de insertar (implementada recursivamente).
+        /* Función de insertar (implementada recursivamente).
+				 * @param* node: apuntador al nodo que se está insertando.
+				 * @param value: valor genérico que tendrá el nodo insertado.
+				 */
         Nodo_AVL<T>* insertAux(Nodo_AVL<T>* node, T value)
         {
             //Se inserta el nodo de manera recursiva
@@ -89,6 +94,8 @@ class AVL
 
         /* Función auxiliar para no tener que
         * estar colocando la raíz en cada llamada.
+				* @param value: valor genérico que tendrá el nodo creado,
+				* 							para su posterior búsqueda y luego eliminación.
         */
         void eliminar(T value)
         {
@@ -96,7 +103,10 @@ class AVL
         }
 
 
-        // Función de eliminar (implementada recursivamente).
+        /* Función de eliminar (implementada recursivamente).
+				 * @param* node: apuntador al nodo que se está eliminando.
+				 * @param value: valor genérico que se comparará al nodo a eliminar.
+				 */
         Nodo_AVL<T>* eliminarAux(Nodo_AVL<T>* node, T value)
         {
             if (node == NULL)  //El elemento a eliminar no se encuentra en el árbol
@@ -161,15 +171,20 @@ class AVL
 
 
         /* Función auxiliar para no tener que
-        * estar colocando la raíz en cada llamada.
-        */
+         * estar colocando la raíz en cada llamada.
+				 * @param value: valor genérico que tendrá el nodo creado,
+ 				* 							para su posterior búsqueda.
+         */
         T buscar(T value)
         {
             return buscarAux(raiz, value);
         }
 
 
-        // Función de buscar (implementada recursivamente).
+        /* Función de buscar (implementada recursivamente).
+				 * @param* node: apuntador al nodo que se está buscando.
+				 * @param value: valor genérico que se comparará al nodo buscado.
+				 */
         T buscarAux(Nodo_AVL<T>* node, T value)
         {
             if (node == NULL)
@@ -237,15 +252,18 @@ class AVL
         /* Encuentra la altura máxima entre 2 enteros,
          * utilizada para actualizar las alturas de los
          * nodos correctamente y conocer su factor de balanceo.
-        */
+				 * @param a, b: enteros a comparar.
+         */
         int max(int a, int b)
         {
             return (a > b)? a : b;
         }
 
 
-        // Rotación a la derecha (simple).
-        Nodo_AVL<T> *rotacion_simple_derecha(Nodo_AVL<T> *pivote)
+        /* Rotación a la derecha (simple).
+				 * @param* pivote: apuntador a nodo que será usado como "pivote".
+				 */
+        Nodo_AVL<T> *rotacion_simple_derecha(Nodo_AVL<T>* pivote)
         {
             Nodo_AVL<T> *pivote_left = pivote->left;
             Nodo_AVL<T> *new_pivote_left = pivote_left->right;
@@ -263,7 +281,9 @@ class AVL
         }
 
 
-        // Rotación a la derecha (doble).
+				/* Rotación a la derecha (doble).
+				 * @param* pivote: apuntador a nodo que será usado como "pivote".
+				 */
         Nodo_AVL<T> *rotacion_doble_derecha(Nodo_AVL<T> *pivote)
         {
             pivote->left = rotacion_simple_izquierda(pivote->left);
@@ -271,7 +291,9 @@ class AVL
         }
 
 
-        // Rotación a la izquierda (simple).
+				/* Rotación a la izquierda (simple).
+				 * @param* pivote: apuntador a nodo que será usado como "pivote".
+				 */
         Nodo_AVL<T> *rotacion_simple_izquierda(Nodo_AVL<T> *pivote)
         {
             Nodo_AVL<T> *pivote_right = pivote->right;
@@ -290,7 +312,9 @@ class AVL
         }
 
 
-        // Rotación a la izquierda (doble).
+				/* Rotación a la izquierda (doble).
+				 * @param* pivote: apuntador a nodo que será usado como "pivote".
+				 */
         Nodo_AVL<T> *rotacion_doble_izquierda(Nodo_AVL<T> *pivote)
         {
             pivote->right = rotacion_simple_derecha(pivote->right);
@@ -298,9 +322,10 @@ class AVL
         }
 
 
-        /* Regresa un múmero que indica el
+        /* Regresa un número que indica el
          * factor de balanceo del nodo N.
-        */
+				 * @param* node: apuntador al nodo a analizar.
+         */
         int obtener_factor_balanceo(Nodo_AVL<T> *node)
         {
             if (node == NULL)
@@ -309,7 +334,10 @@ class AVL
         }
 
 
-        // Obtiene el valor del nodo sucesor
+        /* Obtiene el valor del nodo sucesor
+				 * factor de balanceo del nodo N.
+				 * @param* node: apuntador al nodo a analizar.
+				 */
         Nodo_AVL<T>* nodo_sucesor(Nodo_AVL<T>* node)
         {
             Nodo_AVL<T>* current = node->right;

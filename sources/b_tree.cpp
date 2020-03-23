@@ -50,6 +50,7 @@ class BTree
         /* Inserción de elementos en el arbol B,
          * depende de que el árbol tenga elementos,
          * su raíz este llena o incompleta para poder ingresar valores.
+         * @param value:
          */
         void insertar(int value)
         {
@@ -84,6 +85,7 @@ class BTree
 
         /* Encuentra un valor dado dentro de la estructura del árbol.
          * Función auxiliar de 'buscarAux' para evitar llamara al nodo raiz.
+         * @param value:
          */
         T buscar(int value)
         {
@@ -94,6 +96,7 @@ class BTree
         /* Se elimina el valor establecido dentro del nodo dado.
          * Función auxiliar de 'remover' que se encarga de cambiar
          * la raiz en caso de que la raíz actual se quede sin elementos.
+         * @param value:
          */
         void eliminar(int value)
         {
@@ -156,6 +159,7 @@ class BTree
          * se crea un espacio vacio en el archivo
          * en la ultima posición disponible, regresando
          * esa misma posición para ser utilizada como 'apuntador'.
+         * @param hoja:
          */
         int crear_nodo(int hoja)
         {
@@ -180,6 +184,8 @@ class BTree
         /* Se obtiene el valor en un indice del nodo
          * utilizando su posición para calcular
          * la posición del elemento buscado.
+         * @param nodo:
+         * @param index:
          */
         T valor(int nodo, int index)
         {
