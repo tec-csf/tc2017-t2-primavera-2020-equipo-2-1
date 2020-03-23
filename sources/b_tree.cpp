@@ -13,9 +13,11 @@ class BTreeNode
         /* Se actualizan los valores de un nodo
          * dependiendo de lo que hay en el archivo
          * de manera que se pueda accesar a su información
-         * con mayor facilidad.
-         * @param* file:
-         * @param p:
+         * con mayor facilidad. La clase como tal únicamente sirve
+         * para leer el contenido del archivo simulando la estructura
+         * de un nodo.
+         * @param* file: El archivo '.bin' en donde se escribirá el arbol
+         * @param p: La posición en el archivo donde se encuentra el nodo
          */
         void read(FILE *file, int p)
         {
@@ -35,7 +37,8 @@ class BTree
         /* Constructor de la clase 'BTree'
          * en donde se establece el orden que habrá
          * de seguir el arbol y los nodos.
-         * @param orden:
+         * @param orden: El orden/grado del árbol (la cantidad 
+         *               mínima de elementos que este tendrá)
          */
         BTree(int orden)
         {
@@ -162,7 +165,7 @@ class BTree
          * se crea un espacio vacio en el archivo
          * en la ultima posición disponible, regresando
          * esa misma posición para ser utilizada como 'apuntador'.
-         * @param hoja:
+         * @param hoja: Indica si el nodo es hoja (1) o no (0)
          */
         int crear_nodo(int hoja)
         {
@@ -187,8 +190,8 @@ class BTree
         /* Se obtiene el valor en un indice del nodo
          * utilizando su posición para calcular
          * la posición del elemento buscado.
-         * @param nodo:
-         * @param index:
+         * @param nodo: La posición del archivo en donde se encuentra el nodo
+         * @param index: La posición dentro del nodo del elemento que se requiere
          */
         T valor(int nodo, int index)
         {
@@ -202,8 +205,8 @@ class BTree
         /* Se obtiene el apuntador hacia otro nodo
          * utilizando su indice junto con la posición
          * del nodo para localizar el valor en el archivo.
-         * @param nodo:
-         * @param index:
+         * @param nodo: La posición del archivo en donde se encuentra el nodo
+         * @param index: La posición dentro del nodo del subnodo (como un apuntador) que se requiere
          */
         int apuntador(int nodo, int index)
         {
@@ -215,9 +218,9 @@ class BTree
 
 
         /* Se sobreescribe un valor en una posición dada de un nodo.
-         * @param value:
-         * @param nodo:
-         * @param index:
+         * @param value: El valor genérico que se desea sobreescribir
+         * @param nodo: La posición del archivo en donde se encuentra el nodo
+         * @param index: La posición dentro del nodo del elemento que se desea sobreescribir
          */
         void escribir_valor(T value, int nodo, int index)
         {
@@ -227,9 +230,9 @@ class BTree
 
 
         /* Se sobreescribe un apuntador en una posición dada de un nodo.
-         * @param apuntador:
-         * @param nodo:
-         * @param index:
+         * @param apuntador: La posición del nuevo nodo al cual tendrá acceso el nodo en cuestión
+         * @param nodo: La posición del archivo en donde se encuentra el nodo
+         * @param index: La posición dentro del nodo del subnodo que se desea sobreescribir
          */
         void escribir_apuntador(int apuntador, int nodo, int index)
         {
@@ -239,8 +242,8 @@ class BTree
 
 
         /* Se actualiza el número de elementos dentro del achivo.
-         * @param num:
-         * @param nodo:
+         * @param num: Cantidad de elementos a establecer en el nodo
+         * @param nodo: La posición del archivo en donde se encuentra el nodo
          */
         void actualizar_numero_elementos(int num, int nodo)
         {
@@ -250,7 +253,7 @@ class BTree
 
 
         /* Se recorre el arbol en orden.
-         * @param node_pos:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo
          */
         void recorrerAux(int node_pos)
         {
@@ -271,8 +274,8 @@ class BTree
 
 
         /* Función para encontrar un valor dentro de la estructura del árbol.
-         * @param node_pos:
-         * @param value:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo
+         * @param value: El valor genérico que se desea buscar
          */
         T buscarAux(int node_pos, T value)
         {
@@ -293,8 +296,8 @@ class BTree
 
 
         /* Función para insertar en casos donde el nodo aún no se completa.
-         * @param node_pos:
-         * @param value:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+         * @param value: Valor genérico que se desea insertar
          */
         void insertar_a_nodo_incompleto(int node_pos, T value)
         {
@@ -330,9 +333,9 @@ class BTree
 
         /* Se divide un nodo dado, reasignando
          * valores y llaves entre los nodos resultantes.
-         * @param i:
-         * @param nodo_original:
-         * @param nodo_dividido:
+         * @param i: Indice dentro del nodo apartir del cual se realizarán movimientos
+         * @param nodo_original: La posición del archivo en donde se encuentra el nodo actual
+         * @param nodo_dividido: La posición del archivo en donde se encuentra el subnodo (hijo) del nodo actual 
          */
         void dividir(int i, int nodo_original, int nodo_dividido)
         {
@@ -367,8 +370,8 @@ class BTree
 
 
         /* Se elimina el valor establecido dentro del nodo dado.
-        * @param node_pos:
-        * @param value:
+        * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+        * @param value: Valor genérico a ser removido
         */
         void remover(int node_pos, T value)
         {
@@ -406,8 +409,8 @@ class BTree
 
         /* Remueve el valor buscado en un nodo
          * que no posee hijos (o nodo hoja).
-         * @param node_pos:
-         * @param index:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+         * @param index: Indice apartir del cual se realizarán movimientos e operaciones dentro de el nodo en cuestión
          */
         void remover_de_hoja (int node_pos, int index)
         {
@@ -422,8 +425,8 @@ class BTree
 
 
         /* Remueve el valor buscado en un nodo que posee hijos.
-        * @param node_pos:
-        * @param index:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+         * @param index: Indice apartir del cual se realizarán movimientos e operaciones dentro de el nodo en cuestión
         */
         void remover_de_no_hoja(int node_pos, int index)
         {
@@ -451,8 +454,8 @@ class BTree
 
 
         /* Obtiene el elemento predecesor (mayor de los menores).
-        * @param node_pos:
-        * @param index:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+         * @param index: Indice apartir del cual se realizarán movimientos e operaciones dentro de el nodo en cuestión
         */
         int obtener_predecesor(int node_pos, int index)
         {
@@ -467,8 +470,8 @@ class BTree
 
 
         /* Obtiene el elemento sucesor (menor de los mayores).
-        * @param node_pos:
-        * @param index:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+         * @param index: Indice apartir del cual se realizarán movimientos e operaciones dentro de el nodo en cuestión
         */
         int obtener_sucesor(int node_pos, int index)
         {
@@ -485,8 +488,8 @@ class BTree
         /* Llena un nodo que se ha quedado con menos elementos
          * que los establecidos por el orden utilizando valores
          * pertenecientes a uno de sus nodos hermanos.
-         * @param node_pos:
-         * @param index:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+         * @param index: Indice apartir del cual se realizarán movimientos e operaciones dentro de el nodo en cuestión
          */
         void llenar(int node_pos, int index)
         {
@@ -511,8 +514,8 @@ class BTree
 
 
         /* Se transfiere un valor del nodo hijo izquierdo al nodo actual.
-        * @param pos_node:
-        * @param index:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+         * @param index: Indice apartir del cual se realizarán movimientos e operaciones dentro de el nodo en cuestión
         */
         void tomar_anterior(int pos_node, int index)
         {
@@ -544,8 +547,8 @@ class BTree
 
 
         /* Se transfiere un valor del nodo hijo derecho al nodo actual.
-        * @param node_pos:
-        * @param index:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+         * @param index: Indice apartir del cual se realizarán movimientos e operaciones dentro de el nodo en cuestión
         */
         void tomar_siguiente(int node_pos, int index)
         {
@@ -578,8 +581,8 @@ class BTree
 
         /* Se unen los elementos de 2 nodos hijos de un nodo dado,
         dejando un solo nodo y eliminando el otro como resultado.
-        * @param node_pos:
-        * @param index:
+         * @param node_pos: La posición del archivo en donde se encuentra el nodo actual
+         * @param index: Indice apartir del cual se realizarán movimientos e operaciones dentro de el nodo en cuestión
         */
         void merge(int node_pos, int index)
         {
