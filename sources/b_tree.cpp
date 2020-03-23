@@ -50,9 +50,8 @@ class BTree
         /* Inserción de elementos en el arbol B,
          * depende de que el árbol tenga elementos,
          * su raíz este llena o incompleta para poder ingresar valores.
-         * @param value:
          */
-        void insertar(int value)
+        void insertar(T value)
         {
             if (root.pos == -1){ //Caso en el que el arbol se encuentra vacío
                 crear_nodo(1);
@@ -85,9 +84,8 @@ class BTree
 
         /* Encuentra un valor dado dentro de la estructura del árbol.
          * Función auxiliar de 'buscarAux' para evitar llamara al nodo raiz.
-         * @param value:
          */
-        T buscar(int value)
+        T buscar(T value)
         {
             return buscarAux(root.pos, value);
         }
@@ -96,9 +94,8 @@ class BTree
         /* Se elimina el valor establecido dentro del nodo dado.
          * Función auxiliar de 'remover' que se encarga de cambiar
          * la raiz en caso de que la raíz actual se quede sin elementos.
-         * @param value:
          */
-        void eliminar(int value)
+        void eliminar(T value)
         {
             if (root.pos == -1)
                 return;
@@ -159,7 +156,6 @@ class BTree
          * se crea un espacio vacio en el archivo
          * en la ultima posición disponible, regresando
          * esa misma posición para ser utilizada como 'apuntador'.
-         * @param hoja:
          */
         int crear_nodo(int hoja)
         {
@@ -184,8 +180,6 @@ class BTree
         /* Se obtiene el valor en un indice del nodo
          * utilizando su posición para calcular
          * la posición del elemento buscado.
-         * @param nodo:
-         * @param index:
          */
         T valor(int nodo, int index)
         {
@@ -253,7 +247,7 @@ class BTree
 
 
         // Función para encontrar un valor dentro de la estructura del árbol.
-        T buscarAux(int node_pos, int value)
+        T buscarAux(int node_pos, T value)
         {
             BTreeNode<T> node;
             node.read(file, node_pos);
@@ -275,7 +269,7 @@ class BTree
          *
          * @param node_pos:
          */
-        void insertar_a_nodo_incompleto(int node_pos, int value)
+        void insertar_a_nodo_incompleto(int node_pos, T value)
         {
             BTreeNode<T> node;
             node.read(file, node_pos);
@@ -346,7 +340,7 @@ class BTree
         *
         * @param node_pos:
         */
-        void remover(int node_pos, int value)
+        void remover(int node_pos, T value)
         {
             BTreeNode<T> node;
             node.read(file, node_pos);
