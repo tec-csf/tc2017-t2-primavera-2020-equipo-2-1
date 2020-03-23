@@ -61,7 +61,7 @@ Una vez clonado el repositorio, el usuario deberá ingresar a él, utilizando el
 
 Al estar dentro del repositorio, lo único que falta por hacer es compilar los archivos utilizados y ejecutar el *main*, con los siguientes dos comandos:
 
-    $ g++ sources/main.cpp sources/avl.cpp sources/BTree.cpp
+    $ g++ sources/main.cpp sources/avl_tree.cpp sources/b_tree.cpp
 
     $ ./a.out
 
