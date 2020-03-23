@@ -8,7 +8,14 @@
 using namespace std;
 using namespace std::chrono;
 
-
+/* Función para insertar los elementos de un arreglo de 'n' elementos a cada una 
+ * de las estructuras (AVL y B), midiendo los tiempos de inserción por separado
+ * e imprimiendo una tabla con la comparación de dichos tiempos. 
+ * @param avl: Estrucutra de Árbol AVL en donde se insertarán n elementos
+ * @param b: Estrucutra de Árbol B en donde se insertarán n elementos
+ * @param array: Arreglo que contiene n elementos generados aleatoriamente
+ * @param num: Número de elementos insertados (n)
+ */
 void insertar_n_elementos(AVL<int> *avl, BTree<int> *b, int* array, int num)
 {
     auto inicio=high_resolution_clock::now();
@@ -31,7 +38,13 @@ void insertar_n_elementos(AVL<int> *avl, BTree<int> *b, int* array, int num)
     printf(" %s\n", "|-----------------------------------------------|");
 }
 
-
+/* Función para buscar 1 elemento dentro dentro de cada una de las estructuras
+ * (AVL y B), medir el tiempo que tomó buscar ese elemento e imprimir una tabla
+ * can la comparación de los tiempos y su estado (encontrado o no)
+ * @param avl: Estrucutra de Árbol AVL en donde se insertarán n elementos
+ * @param b: Estrucutra de Árbol B en donde se insertarán n elementos
+ * @param value: Valor a ser buscado dentro de los árboles.
+ */
 void buscar_elementos(AVL<int> *avl, BTree<int> *b, int value)
 {
     auto inicio=high_resolution_clock::now();
@@ -60,7 +73,13 @@ void buscar_elementos(AVL<int> *avl, BTree<int> *b, int value)
     printf(" %s\n", "|-----------------------------------------------------------------------------------------------|");
 }
 
-
+/* Función para eliminar 1 elemento dentro dentro de cada una de las estructuras
+ * (AVL y B), medir el tiempo que tomó eliminar ese elemento e imprimir una tabla
+ * can la comparación de los tiempos obtenidos. 
+ * @param avl: Estrucutra de Árbol AVL en donde se insertarán n elementos
+ * @param b: Estrucutra de Árbol B en donde se insertarán n elementos
+ * @param value: Valor a ser eliminado dentro de los árboles.
+ */
 void eliminar_elementos(AVL<int> *avl, BTree<int> *b, int value)
 {
     auto inicio=high_resolution_clock::now();
